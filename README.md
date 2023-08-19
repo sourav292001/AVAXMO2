@@ -16,9 +16,10 @@ The requirements of the assessment are:
 
 The solution consists of two main components:
 1. **Smart Contract**:
-The `Assessment.sol` file contains the smart contract written in Solidity. It implements a basic bank contract with functionalities for depositing, withdrawing, and transferring funds. It emits three events: `Deposit`, `Withdraw`, and `Transfer`.
+The `Assessment.sol` file contains the smart contract written in Solidity. It implements a basic bank contract with functionalities for depositing, withdrawing, and transferring funds.
 
-2.**JavaScript Code**: The `index.js` file demonstrates how to capture and handle the emitted events. It connects to the Ethereum network, attaches the deployed contract, and sets up event listeners for the three events. When an event is triggered, relevant information is logged to the console.
+2.**JavaScript Code**: The `index.js` file demonstrates how to capture and handle the emitted events. It connects to the Ethereum network, attaches the deployed contract, and sets up event listeners for the three events.
+
 
 ## Getting Started
 
@@ -39,6 +40,7 @@ Follow these steps to set up and run the solution:
 
 After this, the project will be running on your localhost. 
 Typically at http://localhost:3000/
-
+### Author
+Sourav Kashyap
 
 
