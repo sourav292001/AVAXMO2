@@ -52,13 +52,13 @@ export default function HomePage() {
  
     setATM(atmContract);
   }
-
+ // give the balance of the account
   const getBalance = async() => {
     if (atm) {
       setBalance((await atm.getBalance()).toNumber());
     }
   }
-
+ // it will deposit the amount to the account
   const deposit = async() => {
     if (atm) {
       let tx = await atm.deposit(1);
@@ -66,10 +66,18 @@ export default function HomePage() {
       getBalance();
     }
   }
-
+ // it will withdraw the amount from the account
   const withdraw = async() => {
     if (atm) {
       let tx = await atm.withdraw(1);
+      await tx.wait()
+      getBalance();
+    }
+  }
+ // it will transfer the amount to any particular account
+  const transfer = async() => {
+    if (atm) {
+      let tx = await atm.transfer("0x70997970C51812dc3A010C7d01b50e0d17dc79C8", 1);
       await tx.wait()
       getBalance();
     }
@@ -94,22 +102,42 @@ export default function HomePage() {
       <div>
         <p>Your Account: {account}</p>
         <p>Your Balance: {balance}</p>
-        <button onClick={deposit}>Deposit 1 ETH</button>
-        <button onClick={withdraw}>Withdraw 1 ETH</button>
+      <div>
+        <button onClick={deposit}>Deposit ETH</button>
+      </div>
+      <div>
+        <button onClick={withdraw}>Withdraw ETH</button>
+      </div>
+      <div>
+        <button onClick={transfer}>Transfer ETH</button>
+      </div>
       </div>
     )
   }
-
+ 
   useEffect(() => {getWallet();}, []);
 
   return (
     <main className="container">
-      <header><h1>Welcome to the Metacrafters ATM!</h1></header>
+      <header><h1>Welcome to the SouravKashyap ATM!</h1></header>
       {initUser()}
       <style jsx>{`
         .container {
-          text-align: center
-        }
+          width: 70%;
+          height: 600px;
+          background-color: #f2f2f2;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-family: Arial, sans-serif;
+          font-size: 24px;
+          color: #0077b6;
+          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+          border: 2px solid #0077b6;
+          border-radius: 10px;
+          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      }
+      
       `}
       </style>
     </main>
