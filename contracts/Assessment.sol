@@ -7,24 +7,24 @@ pragma solidity ^0.8.9;
 
 contract Assessment {
     address payable public owner;
-    uint256 public balance;
+    uint public balance;
 
-    event Deposit(uint256 amount);
-    event Withdraw(uint256 amount);
-    event Transfer(uint256 amount);
+    event Deposit(uint amount);
+    event Withdraw(uint amount);
+    event Transfer(uint amount);
 
     constructor(uint initBalance) payable {
         owner = payable(msg.sender);
         balance = initBalance;
     }
-
+   // that will map the adress to the private balances
     mapping(address => uint) private balances;
 
-    function getBalance() public view returns(uint256){
+    function getBalance() public view returns(uint){
         return balance;
     }
 
-    function deposit(uint256 _amount) public payable {
+    function deposit(uint _amount) public payable {
         uint _previousBalance = balance;
 
         // make sure this is the owner
@@ -41,9 +41,9 @@ contract Assessment {
     }
 
     // custom error
-    error InsufficientBalance(uint256 balance, uint256 withdrawAmount);
+    error InsufficientBalance(uint balance, uint withdrawAmount);
 
-    function withdraw(uint256 _withdrawAmount) public {
+    function withdraw(uint _withdrawAmount) public {
         require(msg.sender == owner, "You are not the owner of this account");
         uint _previousBalance = balance;
         if (balance < _withdrawAmount) {
@@ -62,7 +62,7 @@ contract Assessment {
         // emit the event
         emit Withdraw(_withdrawAmount);
     }
-    function transfer(address _to, uint256 _transferAmount) public {
+    function transfer(address _to, uint _transferAmount) public {
         require(msg.sender == owner, "You are not the owner of this account");
         uint _previousBalance = balance;
         if (balance < _transferAmount) {
