@@ -3,17 +3,22 @@ pragma solidity ^0.8.9;
 
 //import "hardhat/console.sol";
 
+// For this project, create a simple contract with 2-3 functions. Then show the values of those functions in frontend of the application.
+
 contract Assessment {
     address payable public owner;
     uint256 public balance;
 
     event Deposit(uint256 amount);
     event Withdraw(uint256 amount);
+    event Transfer(uint256 amount);
 
     constructor(uint initBalance) payable {
         owner = payable(msg.sender);
         balance = initBalance;
     }
+
+    mapping(address => uint) private balances;
 
     function getBalance() public view returns(uint256){
         return balance;
@@ -56,5 +61,25 @@ contract Assessment {
 
         // emit the event
         emit Withdraw(_withdrawAmount);
+    }
+    function transfer(address _to, uint256 _transferAmount) public {
+        require(msg.sender == owner, "You are not the owner of this account");
+        uint _previousBalance = balance;
+        if (balance < _transferAmount) {
+            revert InsufficientBalance({
+                balance: balance,
+                withdrawAmount: _transferAmount
+            });
+        }
+
+        // transfer the given amount
+        balance -= _transferAmount;
+        balances[_to] += _transferAmount;
+
+        // assert the balance is correct
+        assert(balance == (_previousBalance - _transferAmount));
+
+        // emit the event
+        emit Transfer(_transferAmount);
     }
 }
